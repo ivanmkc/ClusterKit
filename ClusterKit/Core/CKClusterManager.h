@@ -58,6 +58,14 @@ FOUNDATION_EXTERN const double kCKMarginFactorWorld;
  */
 - (void)clusterManager:(CKClusterManager *)clusterManager performAnimations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion;
 
+/**
+ Tells the delegate that clusters have changed.
+ 
+ @param clusterManager The cluster manager object requesting the animation.
+ @param clusters     An array containing clusters.
+ */
+- (void)clusterManager:(CKClusterManager *)clusterManager clustersDidUpdate:(NSArray<CKCluster *> *) clusters;
+
 @end
 
 @interface CKClusterManager : NSObject

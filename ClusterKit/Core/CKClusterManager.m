@@ -201,6 +201,10 @@ BOOL CLLocationCoordinateEqual(CLLocationCoordinate2D coordinate1, CLLocationCoo
     
     [_clusters minusSet:oldClusters];
     [_clusters unionSet:newClusters];
+    
+    if ([self.delegate respondsToSelector:@selector(clusterManager:clustersDidUpdate:)]) {
+        return [self.delegate clusterManager:self clustersDidUpdate:clusters];
+    }
 }
 
 - (void)setSelectedCluster:(CKCluster *)selectedCluster animated:(BOOL)animated {
