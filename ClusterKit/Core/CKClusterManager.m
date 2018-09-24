@@ -67,9 +67,14 @@ BOOL CLLocationCoordinateEqual(CLLocationCoordinate2D coordinate1, CLLocationCoo
     
     __block MKMapRect visibleMapRect;
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            visibleMapRect = self.map.visibleMapRect;
+        });
+    }
+    else {
         visibleMapRect = self.map.visibleMapRect;
-    });
+    }
     
     // Zoom update
     if (fabs(self.visibleMapRect.size.width - visibleMapRect.size.width) > 0.1f) {
@@ -90,9 +95,14 @@ BOOL CLLocationCoordinateEqual(CLLocationCoordinate2D coordinate1, CLLocationCoo
     
     __block MKMapRect visibleMapRect;
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            visibleMapRect = self.map.visibleMapRect;
+        });
+    }
+    else {
         visibleMapRect = self.map.visibleMapRect;
-    });
+    }
     
     BOOL animated = (self.animationDuration > 0) && fabs(self.visibleMapRect.size.width - visibleMapRect.size.width) > 0.1f;
     [self updateMapRect:visibleMapRect animated:animated];
@@ -184,9 +194,14 @@ BOOL CLLocationCoordinateEqual(CLLocationCoordinate2D coordinate1, CLLocationCoo
     
     __block double zoom;
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            zoom = self.map.zoom;
+        });
+    }
+    else {
         zoom = self.map.zoom;
-    });
+    }
     
     CKClusterAlgorithm *algorithm = (zoom < self.maxZoomLevel)? self.algorithm : [CKClusterAlgorithm new];
     NSArray *clusters = [algorithm clustersInRect:clusterMapRect zoom:zoom tree:self.tree];
